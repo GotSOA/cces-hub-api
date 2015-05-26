@@ -1,0 +1,573 @@
+#%RAML 0.8
+baseUri: http://mocksvc.mulesoft.com/mocks/e736eb78-dfbf-408a-9728-e247eb07fcfb
+title: cces-hub-api
+version: 1.0
+
+/PersonallyIdentifiableInformation:
+  /IF-PII-2:
+    description: Post-Student-PII-Notification-to-Hub
+    post:
+      description: Both Host & Home campuses post individual notifications to Hub; Hub is listening.
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "id": "/",
+              "type": "object",
+              "properties": {
+                "Student_PII": {
+                  "id": "Student_PII",
+                  "type": "array",
+                  "items": {
+                    "id": "0",
+                    "type": "object",
+                    "properties": {
+                      "Address": {
+                        "id": "Address",
+                        "type": "string"
+                      },
+                      "Birthdate": {
+                        "id": "Birthdate",
+                        "type": "string"
+                      },
+                      "City": {
+                        "id": "City",
+                        "type": "string"
+                      },
+                      "Classification": {
+                        "id": "Classification",
+                        "type": "string"
+                      },
+                      "First_Name": {
+                        "id": "First_Name",
+                        "type": "string"
+                      },
+                      "Gender": {
+                        "id": "Gender",
+                        "type": "string"
+                      },
+                      "Encrypted_SSN": {
+                        "id": "Encrypted_SSN",
+                        "type": "string"
+                      },
+                      "Home_Campus_Code": {
+                        "id": "Home_Campus_Code",
+                        "type": "string"
+                      },
+                      "Home_Campus_Email": {
+                        "id": "Home_Campus_Email",
+                        "type": "string"
+                      },
+                      "Home_Campus_User_Eppn": {
+                        "id": "Home_Campus_User_Eppn",
+                        "type": "string"
+                      },
+                      "Home_Campus_User_Identifier": {
+                        "id": "Home_Campus_User_Identifier",
+                        "type": "string"
+                      },
+                      "Host_Campus_Code": {
+                        "id": "Host_Campus_Code",
+                        "type": "string"
+                      },
+                      "Host_Campus_User_Eppn": {
+                        "id": "Host_Campus_User_Eppn",
+                        "type": "string"
+                      },
+                      "Host_Campus_User_Identifier": {
+                        "id": "Host_Campus_User_Identifier",
+                        "type": "string"
+                      },
+                      "Last_Name": {
+                        "id": "Last_Name",
+                        "type": "string"
+                      },
+                      "State": {
+                        "id": "State",
+                        "type": "string"
+                      },
+                      "ZipCode": {
+                        "id": "ZipCode",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          example: |
+            {
+               "Student_PII":[
+                  {
+                     "Address":"value",
+                     "Birthdate":"12-31-1995",
+                     "City":"San Fransisco",
+                     "Classification":"freshmen",
+                     "First_Name":"John",
+                     "Gender":"male",                     "Encrypted_SSN":"5%^fv61v5df23di234$cv5d356l4dv56rs1iz36v#ks4534x62534s",
+                     "Home_Campus_Code":"UCB",
+                     "Home_Campus_Email":"ucb-info@ucop.edu",
+                     "Home_Campus_User_Eppn":"value",
+                     "Home_Campus_User_Identifier":"value",
+                     "Host_Campus_Code":"UCLA",
+                     "Host_Campus_User_Eppn":"value",
+                     "Host_Campus_User_Identifier":"value",
+                     "Last_Name":"Smith",
+                     "State":"CA",
+                     "ZipCode":"value"
+                  }
+               ]
+            }
+      responses:
+        200:
+          description: Simple acknowledgement
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "id": "/",
+                  "type": "object",
+                  "properties": {
+                    "functionality": {
+                      "id": "functionality",
+                      "type": "string"
+                    },
+                    "method": {
+                      "id": "method",
+                      "type": "string"
+                    },
+                    "verb": {
+                      "id": "verb",
+                      "type": "string"
+                    },
+                    "status": {
+                      "id": "status",
+                      "type": "string"
+                    },
+                    "confirmationId": {
+                      "id": "confirmationId",
+                      "type": "string"
+                    }
+                  }
+                }    
+              example: |
+                {
+                  "functionality": "PII",
+                  "method": "Campus Initiated PII Notification",
+                  "verb": "POST",
+                  "status": "ACK",
+                  "confirmationId": "123ZULU321"
+                }
+    
+  /IF-PII-3:
+    description: Enrollment Process Notification
+    post:
+      description: HOST campus – upon adding or updating a student record in their SIS, posts an individual notification to Hub (listening).
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "id": "/",
+              "type": "object",
+              "properties": {
+                "Home_Campus_Code": {
+                  "id": "Home_Campus_Code",
+                  "type": "string"
+                },
+                "Home_Campus_Email": {
+                  "id": "Home_Campus_Email",
+                  "type": "string"
+                },
+                "Home_Campus_User_Eppn": {
+                  "id": "Home_Campus_User_Eppn",
+                  "type": "string"
+                },
+                "Home_Campus_User_Identifier": {
+                  "id": "Home_Campus_User_Identifier",
+                  "type": "string"
+                },
+                "Host_Campus_Code": {
+                  "id": "Host_Campus_Code",
+                  "type": "string"
+                },
+                "Host_Campus_Email": {
+                  "id": "Host_Campus_Email",
+                  "type": "string"
+                },
+                "Host_Campus_User_Eppn": {
+                  "id": "Host_Campus_User_Eppn",
+                  "type": "string"
+                },
+                "Host_Campus_User_Identifier": {
+                  "id": "Host_Campus_User_Identifier",
+                  "type": "string"
+                },
+                "Timestamp": {
+                  "id": "Timestamp",
+                  "type": "string"
+                },
+                "Host_Campus_SIS_Event_Type": {
+                  "id": "Host_Campus_SIS_Event_Type",
+                  "type": "string"
+                }
+              }
+            }
+          example: |
+            {
+               "Home_Campus_Code":"UCB",
+               "Home_Campus_Email":"ucb-info@ucop.edu",
+               "Home_Campus_User_Eppn":"value",
+               "Home_Campus_User_Identifier":"value",
+               "Host_Campus_Code":"UCLA",
+               "Host_Campus_Email":"ucb-info@ucop.edu",
+               "Host_Campus_User_Eppn":"value",
+               "Host_Campus_User_Identifier":"value",
+               "Timestamp":"2015-04-23T18:25:43.511Z",
+               "Host_Campus_SIS_Event_Type":"NEW"
+            }  
+      responses:      
+        200:
+          description: Simple acknowledgement
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "id": "/",
+                  "type": "object",
+                  "properties": {
+                    "functionality": {
+                      "id": "functionality",
+                      "type": "string"
+                    },
+                    "method": {
+                      "id": "method",
+                      "type": "string"
+                    },
+                    "verb": {
+                      "id": "verb",
+                      "type": "string"
+                    },
+                    "status": {
+                      "id": "status",
+                      "type": "string"
+                    },
+                    "confirmationId": {
+                      "id": "confirmationId",
+                      "type": "string"
+                    }
+                  }
+                }
+              example: |
+                 {
+                  "functionality": "PII",
+                  "method": "Enrollment-Process-Notification",
+                  "verb": "POST",
+                  "status": "ACK",
+                  "confirmationId": "123ZULU321"
+                 }
+/EnrollmentsAndDrops:
+  /IF-enroll-1:
+    description: Enrollment or Drop Notification to Hub
+    post:
+      description: Both campuses – HOST and HOME – post individual notifications to Hub (listening).
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "id": "/",
+              "type": "object",
+              "properties": {
+                "Home_Campus_Code": {
+                  "id": "Home_Campus_Code",
+                  "type": "string"
+                },
+                "Host_Campus_Code": {
+                  "id": "Host_Campus_Code",
+                  "type": "string"
+                },
+                "Academic_Term_Type": {
+                  "id": "Academic_Term_Type",
+                  "type": "string"
+                },
+                "Academic_Term": {
+                  "id": "Academic_Term",
+                  "type": "string"
+                },
+                "Academic_Year": {
+                  "id": "Academic_Year",
+                  "type": "string"
+                },
+                "Enrollment_Status": {
+                  "id": "Enrollment_Status",
+                  "type": "string"
+                },
+                "Section_Resource_Number": {
+                  "id": "Section_Resource_Number",
+                  "type": "string"
+                },
+                "Lecture_Resource_Number": {
+                  "id": "Lecture_Resource_Number",
+                  "type": "string"
+                },
+                "Course_Title": {
+                  "id": "Course_Title",
+                  "type": "string"
+                },
+                "Course_Offering_Code": {
+                  "id": "Course_Offering_Code",
+                  "type": "string"
+                },
+                "User_Type": {
+                  "id": "User_Type",
+                  "type": "string"
+                },
+                "Home_Campus_User_Identifier": {
+                  "id": "Home_Campus_User_Identifier",
+                  "type": "string"
+                },
+                "Home_Campus_User_Eppn": {
+                  "id": "Home_Campus_User_Eppn",
+                  "type": "string"
+                },
+                "Host_Campus_User_Identifier": {
+                  "id": "Host_Campus_User_Identifier",
+                  "type": "string"
+                },
+                "Host_Campus_User_Eppn": {
+                  "id": "Host_Campus_User_Eppn",
+                  "type": "string"
+                },
+                "Last_Name": {
+                  "id": "Last_Name",
+                  "type": "string"
+                },
+                "First_Name": {
+                  "id": "First_Name",
+                  "type": "string"
+                },
+                "Home_Campus_Email": {
+                  "id": "Home_Campus_Email",
+                  "type": "string"
+                },
+                "Host_Campus_Email": {
+                  "id": "Host_Campus_Email",
+                  "type": "string"
+                }
+              }
+            }
+          example : |
+            {
+               "Home_Campus_Code":"UCD",
+               "Host_Campus_Code":"UCSC",
+               "Academic_Term_Type":"",
+               "Academic_Term":"",
+               "Academic_Year":"",
+               "Enrollment_Status":"D",
+               "Section_Resource_Number":"",
+               "Lecture_Resource_Number":"",
+               "Course_Title":"",
+               "Course_Offering_Code":"",
+               "User_Type":"",
+               "Home_Campus_User_Identifier":"123456789",
+               "Home_Campus_User_Eppn":"jcarberr@brown.edu",
+               "Host_Campus_User_Identifier":"",
+               "Host_Campus_User_Eppn":"",
+               "Last_Name":"",
+               "First_Name":"",
+               "Home_Campus_Email":"",
+               "Host_Campus_Email":""
+            }
+      responses:      
+        200:
+          description: Simple acknowledgement
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "id": "/",
+                  "type": "object",
+                  "properties": {
+                    "functionality": {
+                      "id": "functionality",
+                      "type": "string"
+                    },
+                    "method": {
+                      "id": "method",
+                      "type": "string"
+                    },
+                    "verb": {
+                      "id": "verb",
+                      "type": "string"
+                    },
+                    "status": {
+                      "id": "status",
+                      "type": "string"
+                    },
+                    "confirmationId": {
+                      "id": "confirmationId",
+                      "type": "string"
+                    }
+                  }
+                }
+              example: |
+                {
+                  "functionality": "Enrollment and Drops",
+                  "method": "Drop Notification",
+                  "verb": "POST",
+                  "status": "ACK",
+                  "confirmationId": "123ZULU321"
+                }        
+/Grades:
+  /IF-grades-3:
+    description: Submit Student Grades
+    post:
+      description: Send Student Grades from Host to Hub
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "id": "/",
+              "type": "object",
+              "properties": {
+                "Sender": {
+                  "id": "Sender",
+                  "type": "string"
+                },
+                "Transaction_Id": {
+                  "id": "Transaction_Id",
+                  "type": "string"
+                },
+                "Host_Campus_Code": {
+                  "id": "Host_Campus_Code",
+                  "type": "string"
+                },
+                "Host_Campus_Student_Identifier": {
+                  "id": "Host_Campus_Student_Identifier",
+                  "type": "string"
+                },
+                "Home_Campus_Student_Identifier": {
+                  "id": "Home_Campus_Student_Identifier",
+                  "type": "string"
+                },
+                "Academic_Term": {
+                  "id": "Academic_Term",
+                  "type": "string"
+                },
+                "Academic_Term_Type": {
+                  "id": "Academic_Term_Type",
+                  "type": "string"
+                },
+                "Academic_Year": {
+                  "id": "Academic_Year",
+                  "type": "string"
+                },
+                "Course_Offering_Code": {
+                  "id": "Course_Offering_Code",
+                  "type": "string"
+                },
+                "Course_Title": {
+                  "id": "Course_Title",
+                  "type": "string"
+                },
+                "Section_Resource_Number": {
+                  "id": "Section_Resource_Number",
+                  "type": "string"
+                },
+                "First_Name": {
+                  "id": "First_Name",
+                  "type": "string"
+                },
+                "Last_Name": {
+                  "id": "Last_Name",
+                  "type": "string"
+                },
+                "Grade": {
+                  "id": "Grade",
+                  "type": "string"
+                },
+                "Grade_Preference": {
+                  "id": "Grade_Preference",
+                  "type": "string"
+                },
+                "Units": {
+                  "id": "Units",
+                  "type": "string"
+                }
+              }
+            }
+          example: |
+            {
+              "Sender": "HOST_CAMPUS",
+              "Transaction_Id": "1122334455",
+              "Host_Campus_Code": "UCB",
+              "Host_Campus_Student_Identifier": "123456789",
+              "Home_Campus_Student_Identifier": "987654321",
+              "Academic_Term": "Fall",
+              "Academic_Term_Type": "Quarter",
+              "Academic_Year": "2015",
+              "Course_Offering_Code": "HIS",
+              "Course_Title": "Calculus for Science, Engineering and Mathematics",
+              "Section_Resource_Number": "TBD",
+              "First_Name": "John",
+              "Last_Name": "Smith",
+              "Grade": "TBD",
+              "Grade_Preference": "Grade",
+              "Units": "credit"
+            } 
+      responses:
+        200:
+          description: simple acknowledgement or transaction confirmation
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "id": "/",
+                  "type": "object",
+                  "properties": {
+                    "functionality": {
+                      "id": "functionality",
+                      "type": "string"
+                    },
+                    "method": {
+                      "id": "method",
+                      "type": "string"
+                    },
+                    "verb": {
+                      "id": "verb",
+                      "type": "string"
+                    },
+                    "status": {
+                      "id": "status",
+                      "type": "string"
+                    },
+                    "Transaction_Id": {
+                      "id": "Transaction_Id",
+                      "type": "string"
+                    },
+                    "confirmationId": {
+                      "id": "confirmationId",
+                      "type": "string"
+                    }
+                  }
+                }
+              example: |
+                {
+                   "functionality":"Student Grades",
+                   "method":"Submit-Student-Grades",
+                   "verb":"POST",
+                   "status":"ACK",
+                   "Transaction_Id":"1122334455",
+                   "confirmationId":"123ZULU321"
+                }
+              
+    
+                
+  
