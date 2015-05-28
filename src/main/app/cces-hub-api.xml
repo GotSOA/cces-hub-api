@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd" version="EE-3.6.1">
+    <http:listener-config name="cces-hub-api-httpListenerConfig" host="localhost" port="8081" doc:name="HTTP Listener Configuration"/>
+    <apikit:config name="cces-hub-api-config" raml="cces-hub-api.raml" consoleEnabled="true" consolePath="console" doc:name="Router"/>
+    <apikit:mapping-exception-strategy name="cces-hub-api-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+    <flow name="cces-hub-api-main">
+        <http:listener config-ref="cces-hub-api-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="cces-hub-api-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="cces-hub-api-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="post:/PersonallyIdentifiableInformation/IF-PII-2:application/json:cces-hub-api-config">
+        <set-payload value="{&#xA;  &quot;functionality&quot;: &quot;PII&quot;,&#xA;  &quot;method&quot;: &quot;Campus Initiated PII Notification&quot;,&#xA;  &quot;verb&quot;: &quot;POST&quot;,&#xA;  &quot;status&quot;: &quot;ACK&quot;,&#xA;  &quot;confirmationId&quot;: &quot;123ZULU321&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/PersonallyIdentifiableInformation/IF-PII-3:application/json:cces-hub-api-config">
+        <set-payload value="{&#xA; &quot;functionality&quot;: &quot;PII&quot;,&#xA; &quot;method&quot;: &quot;Enrollment-Process-Notification&quot;,&#xA; &quot;verb&quot;: &quot;POST&quot;,&#xA; &quot;status&quot;: &quot;ACK&quot;,&#xA; &quot;confirmationId&quot;: &quot;123ZULU321&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/EnrollmentsAndDrops/IF-enroll-1:application/json:cces-hub-api-config">
+        <set-payload value="{&#xA;  &quot;functionality&quot;: &quot;Enrollment and Drops&quot;,&#xA;  &quot;method&quot;: &quot;Drop Notification&quot;,&#xA;  &quot;verb&quot;: &quot;POST&quot;,&#xA;  &quot;status&quot;: &quot;ACK&quot;,&#xA;  &quot;confirmationId&quot;: &quot;123ZULU321&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/Grades/IF-grades-3:application/json:cces-hub-api-config">
+        <set-payload value="{&#xA;   &quot;functionality&quot;:&quot;Student Grades&quot;,&#xA;   &quot;method&quot;:&quot;Submit-Student-Grades&quot;,&#xA;   &quot;verb&quot;:&quot;POST&quot;,&#xA;   &quot;status&quot;:&quot;ACK&quot;,&#xA;   &quot;Transaction_Id&quot;:&quot;1122334455&quot;,&#xA;   &quot;confirmationId&quot;:&quot;123ZULU321&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+</mule>
